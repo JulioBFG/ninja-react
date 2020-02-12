@@ -14,8 +14,9 @@ const renderApp = (NextApp) => {
     )
 }
 
-render(
-        <App />,
+render(<AppContainer>
+        <App />
+    </AppContainer>,
     document.querySelector("[data-js=app]")
 );
 
