@@ -14,14 +14,13 @@ const renderApp = (NextApp) => {
     )
 }
 
-render(<AppContainer>
-    <App />
-    </AppContainer>,
+render(
+        <App />,
     document.querySelector("[data-js=app]")
 );
 
-if(module.hot) {
-    module.hot.accept('./app', () => {
+if (module.hot) {
+    module.hot.accept('./app.js', () => {
         const NextApp = require('./app').default
         renderApp(NextApp)
     })
