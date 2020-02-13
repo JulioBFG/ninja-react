@@ -1,32 +1,37 @@
 'use Strict'
 
-import React from 'react';
+import React, { Component } from 'react';
 import Search from './components/search';
 import UserInfo from './components/user-info';
 import Actions from './components/actions';
 import Repos from './components/repos';
+import AppContent from './components/app-content';
 
-const App = () => (
-  <div className='app'>
-    <Search />
-    <UserInfo />
-    <Actions />
-    <Repos 
-      className='repos'
-      title ='repositorios'
-      repos ={[{
-        name:'Nome do repositorio',
-        link :'#'
-      }]} />
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      userInfo: {
+        username: 'Julio',
+        repos: 12
+      },
+      repos: [{
+        name: 'Repo',
+        link: '#'
+      }],
+      starred: [{
+        name: 'Repo',
+        link: '#'
+      }]
+    }
+  }
 
-    <Repos
-      className='starred'
-      title ='Favoritos'
-      repos ={[{
-        name:'Nome do repositorio',
-        link :'#' 
-      }]} 
+  render() {
+    return <AppContent
+      userInfo={this.state.userInfo}
+      repos={this.state.repos}
+      starred={this.state.starred}
     />
-  </div>
-)
+  }
+}
 export default App
