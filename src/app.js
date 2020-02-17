@@ -1,28 +1,39 @@
 'use Strict'
 
 import React, { Component } from 'react';
-import Search from './components/search';
-import UserInfo from './components/user-info';
-import Actions from './components/actions';
-import Repos from './components/repos';
 import AppContent from './components/app-content';
+import ajax from '@fdaciuk/ajax';
+
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      userInfo: {
-        username: 'Julio',
-        repos: 12
-      },
-      repos: [{
-        name: 'Repo',
-        link: '#'
-      }],
-      starred: [{
-        name: 'Repo',
-        link: '#'
-      }]
+      userInfo: null,
+      repos: [],
+      starred: []
+    }
+  }
+
+  handleSearch(e) {
+    const value = e.target.value
+    const keyCode = e.which || e.keyCode
+    const ENTER = 13
+
+    if (keyCode === ENTER) {
+      ajax().get(`https://api.github.com/users/${value}`)
+        .then((result) => {
+          this.setState({
+            userInfo: {
+              username: result.name,
+              repos: result.public_repos,
+              followers: result.followers,
+              following: result.following,
+              photo: result.avatar_url,
+              login: result.login,
+            }
+          })
+        })
     }
   }
 
@@ -31,6 +42,7 @@ class App extends Component {
       userInfo={this.state.userInfo}
       repos={this.state.repos}
       starred={this.state.starred}
+      handleSearch={(e) => this.handleSearch(e)}
     />
   }
 }
