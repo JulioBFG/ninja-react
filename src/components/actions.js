@@ -1,14 +1,12 @@
-'use strict '
+"use strict ";
 
-import React from 'react';
+import React from "react";
 
-const Actions = () => (
-    <div className='actions'>
-        <button>Ver Repositórios</button>
-        <button>Ver favoritos</button>
-    </div>
+const Actions = ({ getRepos, getStarred }) => (
+  <div className="actions">
+    <button onClick={getRepos}>Ver Repositórios</button>
+    <button onClick={getStarred}>Ver favoritos</button>
+  </div>
+);
 
-)
-
-export default Actions
-
+export default Actions;
