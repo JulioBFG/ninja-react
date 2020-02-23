@@ -1,28 +1,34 @@
-'use Strict'
+"use Strict";
 
-import React, { Component } from 'react';
-import AppContent from './components/app-content';
-import ajax from '@fdaciuk/ajax';
-
+import React, { Component } from "react";
+import AppContent from "./components/app-content";
+import ajax from "@fdaciuk/ajax";
 
 class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       userInfo: null,
       repos: [],
       starred: []
-    }
+    };
+  }
+
+  getGitHubApiUrl( username , type ) {
+    const internalUser = username ? `/${username}` : ''
+    const internalType = type ? `/${type}` : ''
+    return `https://api.github.com/users/${username}${internalType}`
   }
 
   handleSearch(e) {
-    const value = e.target.value
-    const keyCode = e.which || e.keyCode
-    const ENTER = 13
+    const value = e.target.value;
+    const keyCode = e.which || e.keyCode;
+    const ENTER = 13;
 
     if (keyCode === ENTER) {
-      ajax().get(`https://api.github.com/users/${value}`)
-        .then((result) => {
+      ajax()
+        .get(`https://api.github.com/users/${value}`)
+        .then(result => {
           this.setState({
             userInfo: {
               username: result.name,
@@ -30,20 +36,42 @@ class App extends Component {
               followers: result.followers,
               following: result.following,
               photo: result.avatar_url,
-              login: result.login,
-            }
-          })
-        })
+              login: result.login
+            },
+            repos : [],
+            starred : []
+          });
+        });
     }
   }
 
+  getRepos(type) {
+    return (e) => {
+      const username = this.state.userInfo.login
+      ajax().get(`https://api.github.com/users/${username}/${type}`)
+      .then((result) => {
+        this.setState({
+          [type]: result.map((repo) => ({
+              name: repo.name, 
+              link: repo.html_url
+          }))
+        })
+      })
+    }
+
+  }
+
   render() {
-    return <AppContent
-      userInfo={this.state.userInfo}
-      repos={this.state.repos}
-      starred={this.state.starred}
-      handleSearch={(e) => this.handleSearch(e)}
-    />
+    return (
+      <AppContent
+        userInfo={this.state.userInfo}
+        repos={this.state.repos}
+        starred={this.state.starred}
+        handleSearch={e => this.handleSearch(e)}
+        getRepos={this.getRepos('repos')}
+        getStarred={this.getRepos('starred')}
+      />
+    );
   }
 }
-export default App
+export default App;
