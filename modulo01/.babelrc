@@ -1,0 +1,7 @@
+{
+    //configuracao do babel para utilizar o preset ecma2015
+    // o stage-0 serve para puxar as ultimas adicoes ao babel
+    "presets": ["es2015", "stage-0", "react"],
+    //plugin para o react hotloader
+    "plugins": ["react-hot-loader/babel"]
+}

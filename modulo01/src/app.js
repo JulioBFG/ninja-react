@@ -1,7 +1,7 @@
 "use Strict";
 
 import React, { Component } from "react";
-import AppContent from "./components/app-content";
+import AppContent from "./components/app-content/app-content";
 import ajax from "@fdaciuk/ajax";
 
 class App extends Component {

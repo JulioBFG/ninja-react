@@ -2,6 +2,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
+import actions from '../actions'
 
 const Actions = ({ getRepos, getStarred }) => (
   <div className="actions">

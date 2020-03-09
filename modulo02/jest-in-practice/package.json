@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "devDependencies": {
+    "jest-cli": "^25.1.0"
+  }
+}
